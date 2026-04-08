@@ -1,0 +1,13 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: backend-read-config-binding
+  namespace: demo-app
+subjects:
+  - kind: ServiceAccount
+    name: backend-sa
+    namespace: demo-app
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: backend-read-config

@@ -1,0 +1,25 @@
+resources:
+  - namespace.yaml
+  - configmap/app-config.yaml
+  - configmap/mysql-init-configmap.yaml
+  - secrets/mysql-secret.yaml
+  - secrets/backend-tls-secret.yaml
+  - secrets/frontend-tls-secret.yaml
+  - rbac/backend-serviceaccount.yaml
+  - rbac/frontend-serviceaccount.yaml
+  - rbac/backend-role.yaml
+  - rbac/backend-rolebinding.yaml
+  - mysql/service.yaml
+  - mysql/statefulset.yaml
+  - backend/service.yaml
+  - backend/deployment.yaml
+  - backend/pdb.yaml
+  - backend/hpa.yaml
+  - frontend/service.yaml
+  - frontend/deployment.yaml
+  - frontend/ingress.yaml
+  - network-policies/default-deny.yaml
+  - network-policies/allow-dns.yaml
+  - network-policies/allow-frontend-to-backend.yaml
+  - network-policies/allow-backend-egress-mysql.yaml
+  - network-policies/allow-mysql-from-backend.yaml

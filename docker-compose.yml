@@ -1,0 +1,60 @@
+services:
+  mysql:
+    image: mysql:8.4
+    container_name: demo-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: "RootPassw0rd!"
+      MYSQL_DATABASE: appdb
+      MYSQL_USER: appuser
+      MYSQL_PASSWORD: "AppPassw0rd!"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    networks:
+      - app-net
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h localhost -u root -p$$MYSQL_ROOT_PASSWORD"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  backend:
+    build:
+      context: ./backend
+    image: demo/backend:1.0.0
+    container_name: demo-backend
+    environment:
+      PORT: 8443
+      DB_HOST: mysql
+      DB_PORT: 3306
+      DB_NAME: appdb
+      DB_USER: appuser
+      DB_PASSWORD: "AppPassw0rd!"
+      TLS_KEY_PATH: /certs/backend.key
+      TLS_CERT_PATH: /certs/backend.crt
+    volumes:
+      - ./certs/backend.key:/certs/backend.key:ro
+      - ./certs/backend.crt:/certs/backend.crt:ro
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks:
+      - app-net
+
+  frontend:
+    build:
+      context: ./frontend
+    image: demo/frontend:1.0.0
+    container_name: demo-frontend
+    ports:
+      - "8080:8080"
+    depends_on:
+      - backend
+    networks:
+      - app-net
+
+networks:
+  app-net:
+
+volumes:
+  mysql_data:
