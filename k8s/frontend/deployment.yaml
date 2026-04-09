@@ -38,8 +38,8 @@ spec:
               app: frontend
       containers:
         - name: frontend
-          image: demo/frontend:1.0.0
-          imagePullPolicy: IfNotPresent
+          image: YOUR_DOCKERHUB_USERNAME/frontend:1.0.0
+          imagePullPolicy: Always
           ports:
             - containerPort: 8080
               name: http

@@ -41,8 +41,8 @@ spec:
               app: backend
       containers:
         - name: backend
-          image: demo/backend:1.0.0
-          imagePullPolicy: IfNotPresent
+          image: YOUR_DOCKERHUB_USERNAME/backend:1.0.0
+          imagePullPolicy: Always
           ports:
             - containerPort: 8443
               name: https

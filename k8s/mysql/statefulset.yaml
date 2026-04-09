@@ -76,11 +76,7 @@ spec:
         - name: init-sql
           configMap:
             name: mysql-init-sql
-  volumeClaimTemplates:
-    - metadata:
-        name: mysql-data
-      spec:
-        accessModes: ["ReadWriteOnce"]
-        resources:
-          requests:
-            storage: 5Gi
+        - name: mysql-data
+          hostPath:
+            path: /data/demo-app/mysql
+            type: DirectoryOrCreate

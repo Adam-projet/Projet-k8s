@@ -17,9 +17,9 @@ resources:
   - backend/hpa.yaml
   - frontend/service.yaml
   - frontend/deployment.yaml
-  - frontend/ingress.yaml
   - network-policies/default-deny.yaml
   - network-policies/allow-dns.yaml
   - network-policies/allow-frontend-to-backend.yaml
   - network-policies/allow-backend-egress-mysql.yaml
   - network-policies/allow-mysql-from-backend.yaml
+  - network-policies/allow-external-to-frontend.yaml
