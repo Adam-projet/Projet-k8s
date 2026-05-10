@@ -1,4 +1,4 @@
-# Pack corrigé pour EC2 Ubuntu 24 + kubeadm (1 control-plane + 2 workers)
+# kubeadm (1 control-plane + 2 workers)
 
 Cette version conserve l'application d'origine :
 - **frontend** : NGINX + page HTML
@@ -7,14 +7,13 @@ Cette version conserve l'application d'origine :
 
 Le frontend lit les données MySQL **via le backend**.
 
-## Corrections apportées pour EC2 / kubeadm
 
 - `frontend` exposé en **NodePort 30080** pour accès via l'IP publique d'un worker.
 - images Kubernetes remplacées par des placeholders **Docker Hub** pour éviter `ImagePullBackOff`.
 - `imagePullPolicy: Always` pour récupérer les images poussées.
 - MySQL converti pour utiliser un **hostPath** (`/data/demo-app/mysql`) afin d'éviter le problème `PVC Pending` sur un cluster kubeadm sans provisioner de stockage.
 - ajout d'une **NetworkPolicy** qui autorise l'accès entrant vers le frontend, sinon le `default-deny` bloquait l'accès externe.
-- l'Ingress a été déplacé dans `k8s/optional/ingress.yaml` car, sur EC2/kubeadm, il faut d'abord installer un contrôleur Ingress.
+- l'Ingress a été déplacé dans `k8s/optional/ingress.yaml` car, sur kubeadm, il faut d'abord installer un contrôleur Ingress.
 
 ## Structure
 
@@ -38,7 +37,7 @@ k8s-microservices-pack-ec2-fixed/
 └── README.md
 ```
 
-## 1. Test local avec Docker Compose
+##  Test local avec Docker Compose
 
 ```bash
 docker compose up -d --build
@@ -50,7 +49,7 @@ Ouvre ensuite :
 http://localhost:8080
 ```
 
-## 2. Préparer les images pour Kubernetes
+## Préparer les images pour Kubernetes
 
 Remplace `YOUR_DOCKERHUB_USERNAME` par ton identifiant Docker Hub.
 
@@ -66,13 +65,13 @@ Ensuite, si besoin, vérifie les lignes `image:` dans :
 - `k8s/backend/deployment.yaml`
 - `k8s/frontend/deployment.yaml`
 
-## 3. Déployer sur Kubernetes
+##  Déployer sur Kubernetes
 
 ```bash
 kubectl apply -k k8s/
 ```
 
-## 4. Vérifier
+##  Vérifier
 
 ```bash
 kubectl get pods -n demo-app -o wide
@@ -86,19 +85,8 @@ Tu dois voir :
 - `mysql-0` en `Running`
 - service `frontend` en `NodePort`
 
-## 5. Accès depuis EC2
 
-Ouvre dans le **Security Group AWS** :
-- TCP `30080` depuis ton IP ou `0.0.0.0/0` pour les tests
-- plus généralement `30000-32767` si tu veux tester d'autres NodePorts
-
-Ensuite ouvre dans le navigateur l'**IP publique d'un worker** :
-
-```text
-http://IP_PUBLIQUE_WORKER:30080
-```
-
-## 6. Données de test
+##  Données de test
 
 La base contient 3 lignes chargées par `db/init.sql`.
 
@@ -110,7 +98,7 @@ Le backend expose :
 - `GET /api/items`
 - `GET /api/info`
 
-## 7. Réplicas
+##  Réplicas
 
 Par défaut :
 - `frontend`: 2 replicas
@@ -124,7 +112,6 @@ kubectl scale deployment frontend -n demo-app --replicas=4
 kubectl scale deployment backend -n demo-app --replicas=5
 ```
 
-## 8. Ce que couvre le pack
 
 ### Chapitre 2 - Dockerisation
 - Dockerfile pour chaque service
@@ -149,11 +136,7 @@ kubectl scale deployment backend -n demo-app --replicas=5
 - NetworkPolicies
 - backend en HTTPS
 
-## 9. Limites de cette version EC2
 
-- MySQL utilise `hostPath` pour être simple à lancer sur kubeadm sans CSI. C'est bien pour une démo, pas pour une vraie production.
-- Le certificat TLS est auto-signé.
-- L'Ingress n'est pas appliqué par défaut.
 
 ## 10. Débogage utile
 
@@ -163,5 +146,4 @@ kubectl logs -n demo-app deploy/backend
 kubectl logs -n demo-app deploy/frontend
 kubectl logs -n demo-app mysql-0
 ```
-# argocd-demo
-# argocd-demo
+
