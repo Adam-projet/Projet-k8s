@@ -21,7 +21,7 @@ services:
   backend:
     build:
       context: ./backend
-    image: demo/backend:1.0.0
+    image: demo/backend:latest
     container_name: demo-backend
     environment:
       PORT: 8443
