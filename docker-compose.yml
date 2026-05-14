@@ -21,7 +21,7 @@ services:
   backend:
     build:
       context: ./backend
-    image: demo/backend:latest
+    image: demo/backend:1.0.0
     container_name: demo-backend
     environment:
       PORT: 8443
@@ -35,8 +35,6 @@ services:
     volumes:
       - ./certs/backend.key:/certs/backend.key:ro
       - ./certs/backend.crt:/certs/backend.crt:ro
-    ports:                      
-    - "8443:8443"
     depends_on:
       mysql:
         condition: service_healthy
