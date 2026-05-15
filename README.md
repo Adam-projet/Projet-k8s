@@ -18,7 +18,7 @@ Le frontend lit les données MySQL **via le backend**.
 ## Structure
 
 ```text
-k8s-microservices-pack-ec2-fixed/
+k8s-microservices/
 ├── backend/
 ├── certs/
 ├── db/
