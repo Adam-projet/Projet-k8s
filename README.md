@@ -79,7 +79,7 @@ kubectl get svc -n demo-app
 kubectl get networkpolicy -n demo-app
 ```
 
-Tu dois voir :
+on doit voir :
 - `frontend` en `Running`
 - `backend` en `Running`
 - `mysql-0` en `Running`
