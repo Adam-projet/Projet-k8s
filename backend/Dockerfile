@@ -1,4 +1,4 @@
-FROM node:20-alpine AS deps
+FROM node:7.0.5 AS deps
 WORKDIR /app
 COPY package.json ./
 RUN npm install --omit=dev && npm cache clean --force
