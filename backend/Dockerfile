@@ -1,7 +1,8 @@
-FROM node:7.0.5 AS deps
+FROM node:20-alpine AS deps
 WORKDIR /app
 COPY package.json ./
 RUN npm install --omit=dev && npm cache clean --force
+RUN npm install -g glob@^10.5.0 minimatch@^9.0.7
 
 FROM node:20-alpine
 WORKDIR /app
