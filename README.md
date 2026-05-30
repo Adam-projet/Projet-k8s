@@ -1,9 +1,6 @@
 # Projet :  Création, sécurisation et optimisation d'un cluster Kubernetes haute disponibilité avec Argo CD et monitoring avancé
 # Travail de fin d'études réalisé en vue de l'obtention du titre de Bachelier en Informatique et Systèmes
-# Ecole Industrielle et Commerciale de la Province de Namur 
-# Etudiant : Adam MHAND
-# Promoteur : M. Alexandre BALIGANT
-# Année académique : 2025-2026
+
 
 > Application 3-tiers (Frontend · Backend · MySQL) déployée sur un cluster **kubeadm** (1 control-plane + 2 workers) avec haute disponibilité, sécurité renforcée et observabilité intégrée.
 
